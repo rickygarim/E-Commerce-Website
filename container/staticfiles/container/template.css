@@ -1,8 +1,20 @@
-ul.navigation
-{
+ul.navigation {
     list-style: none;
     display: flex;
-    justify-content: space-around; 
-    text-decoration: none;
+    justify-content: space-around;
+    align-items: baseline;
 }
 
+ul.navigation a {
+    text-decoration: none;
+    font-size: larger;
+}
+
+ul.navigation a.active {
+    border: 2px solid pink;
+}
+
+.active {
+    border: 2px solid red;
+    padding: 3px;
+}
