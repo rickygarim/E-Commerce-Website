@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.db import connections
 
-def index(request):
+def store(request):
     with connections['default'].cursor() as cursor:
         cursor.execute("SELECT name, description, price, inventory FROM products")
         rows = cursor.fetchall()

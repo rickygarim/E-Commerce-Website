@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,20 +7,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'container/template.css' %}">
+    <link rel="stylesheet" href="{% static 'store/styles.css' %}">
     <title>Document</title>
 </head>
 
 <body>
-
+    <ul class="navigation">
+        <li>  <a href="{% url 'home' %}">Home</a> </li>
+        <li class="active"> <a href="{% url 'store' %}"> Store </a> </li>
+        <li> <a href="{% url 'cart' %}"> Cart </a> </li>
+        <li> <a href="{% url 'info' %}"> Info </a> </li>
+    </ul>
     
     {% if rows|length == 0 %}
         <h1> NO ITEMS CURRENTLY IN STORE </h1>
     {% else %}
-        {% for row in rows %}
-            {% for data in row %}
-                <p>{{ data }}</p>
+        <ul class = "items">
+            {% for row in rows %}
+                <li>
+                    <h2> {{ row.0 }} </h2>
+                    <p> {{ row.1 }} </p>
+                    <p class= "price">  {{ row.2 }}</p>
+                </li>
             {% endfor %}
-        {% endfor %}
+        </ul>
+        
     {% endif %}
 
 
