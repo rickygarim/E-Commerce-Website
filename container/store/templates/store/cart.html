@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'container/template.css' %}">
+    <link rel="stylesheet" href="{% static 'store/styles.css' %}">
+    <title>Document</title>
+</head>
+
+<script>
+    window.onload = function() {
+      var delay = 2500; 
+      var url = "{% url 'store' %}"; 
+      setTimeout(function() {
+        window.location.href = url;
+      }, delay);
+    };
+  </script>
+
+<body>
+    <ul class="navigation">
+        <li> <a href="{% url 'home' %}">Home</a> </li>
+        <li class="active"> <a href="{% url 'store' %}"> Store </a> </li>
+        <li> <a href="{% url 'cart' %}"> Cart </a> </li>
+        <li> <a href="{% url 'info' %}"> Info </a> </li>
+    </ul>
+
+    <a href="{% url 'store' %}"> BACK </a>
+    <div class="parent-container">
+        {% if no_stock == "TRUE" %}
+            <h2> Error: No more stock available </h2>
+
+        {% else %}
+            <h2> Successfully added {{ item }} to your cart! </h2>
+        {% endif %}
+        <h3> WINDOW WILL AUTO REFRESH DONT CLICK ANY LINKS! </h3>
+    </div>
+
+
+
+
+</body>
+
+</html>

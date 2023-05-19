@@ -1,8 +1,10 @@
+
 ul.navigation {
     list-style: none;
     display: flex;
     justify-content: space-around;
     align-items: baseline;
+    padding-top: 35px;
 }
 
 ul.navigation a {

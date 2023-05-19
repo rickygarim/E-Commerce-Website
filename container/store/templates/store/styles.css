@@ -89,4 +89,5 @@ h1 {
     height: fit-content;
     width: fit-content;
     padding: 10px 20px 10px 20px;
+    max-width: 20px;
 }

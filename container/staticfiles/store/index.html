@@ -12,28 +12,50 @@
     <title>Document</title>
 </head>
 
+
+
+
+
+
 <body>
     <ul class="navigation">
-        <li>  <a href="{% url 'home' %}">Home</a> </li>
-        <li class="active"> <a href="{% url 'store' %}"> Store </a> </li>
+        <li class="active">  <a href="{% url 'home' %}">Home</a> </li>
+        <li> <a href="{% url 'store' %}"> Store </a> </li>
         <li> <a href="{% url 'cart' %}"> Cart </a> </li>
         <li> <a href="{% url 'info' %}"> Info </a> </li>
-    </ul>
-    
-    {% if rows|length == 0 %}
-        <h1> NO ITEMS CURRENTLY IN STORE </h1>
-    {% else %}
-        <ul class = "items">
-            {% for row in rows %}
-                <li>
-                    <h2> {{ row.0 }} </h2>
-                    <p> {{ row.1 }} </p>
-                    <p class= "price">  {{ row.2 }}</p>
-                    <p> Stock: {{row.3}}</p>
-                </li>
-            {% endfor %}
-        </ul>
+        <li> <a href="{% url 'login' %}"> Login </a> </li>
+        <li> <a href="{% url 'logout' %}"> Logout </a> </li>
         
+    </ul>
+
+    {% if rows|length == 0 %}
+    <h1> NO ITEMS CURRENTLY IN STORE </h1>
+    {% else %}
+    <ul class="items" style="padding-top: 50px;">
+        {% for row in rows %}
+
+        <li>
+            <a href="{% url 'item' row.0 %}">
+                <h2 class="item-title">{{ row.1 }}</h2>
+                <p class="item-description">{{ row.2 }}</p>
+                <p class="item-price">{{ row.3 }}</p>
+                <p class="item-stock">Stock: {{ row.4 }}</p>
+
+                <p class="color-types">
+                    Colors: 
+                    {% for color in row.5 %}
+                    {{ color }}
+                    {% endfor %}
+                </p>
+
+                
+
+            </a>
+        </li>
+
+        {% endfor %}
+    </ul>
+
     {% endif %}
 
 

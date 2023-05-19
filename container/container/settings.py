@@ -35,9 +35,11 @@ INSTALLED_APPS = [
     'store',
     'cart', 
     'info',
+    'log',
     'container',
     'django.contrib.admin',
     'django.contrib.auth',
+    
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -81,7 +83,7 @@ WSGI_APPLICATION = 'container.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'shoping',
+        'NAME': 'shop',
         'USER': 'rickygarimella',
         'PASSWORD': 'rickysairam12',
         'HOST': '10.0.0.50',
@@ -108,6 +110,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -125,11 +130,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/staticfiles/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'store', 'templates'), os.path.join(BASE_DIR, 'container', 'templates'), os.path.join(BASE_DIR, 'info', 'templates'), os.path.join(BASE_DIR, 'cart', 'templates')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'store', 'templates'), os.path.join(BASE_DIR, 'container', 'templates'), os.path.join(BASE_DIR, 'info', 'templates'), os.path.join(BASE_DIR, 'cart', 'templates'), os.path.join(BASE_DIR, 'store', 'images'), os.path.join(BASE_DIR, 'log', 'templates')]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = 'login'  # URL name or path for the login page
+LOGIN_REDIRECT_URL = 'home'  # URL name or path to redirect after successful login
