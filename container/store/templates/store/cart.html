@@ -32,13 +32,17 @@
 
     <a href="{% url 'store' %}"> BACK </a>
     <div class="parent-container">
+    {% if logged_in == "FALSE" %}
+        <h2> Error: You are not logged in </h2>
+    {% else %}
         {% if no_stock == "TRUE" %}
             <h2> Error: No more stock available </h2>
 
         {% else %}
             <h2> Successfully added {{ item }} to your cart! </h2>
+            <h3> WINDOW WILL AUTO REFRESH DONT CLICK ANY LINKS! </h3>
         {% endif %}
-        <h3> WINDOW WILL AUTO REFRESH DONT CLICK ANY LINKS! </h3>
+    {% endif %}
     </div>
 
 

@@ -21,6 +21,7 @@ class Product(models.Model):
 
 
 class Shopper(models.Model): # TODO FIX THIS 
+    username = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
     items = models.CharField(max_length=10000)
     
