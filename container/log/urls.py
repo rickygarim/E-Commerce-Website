@@ -6,4 +6,6 @@ urlpatterns = [
     # other URL patterns
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
+    
+    
 ]

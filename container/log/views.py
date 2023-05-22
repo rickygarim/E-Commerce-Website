@@ -13,4 +13,7 @@ def logout(request):
     if request.user.is_authenticated:
         return render(request, 'log/login.html', {"logged_in" : "true"})
     else:
-       return render(request, 'login/login.html', {"logged_in" : "false"})
+       return render(request, 'login/login.html', {"logged_in" : "false"}) 
+   
+    
+   
