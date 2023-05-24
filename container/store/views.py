@@ -1,23 +1,6 @@
 from django.shortcuts import render
-from . models import Product
+from . models import Product, Shopper
 from django.db import connections
-
-# def store(request):
-#     with connections['default'].cursor() as cursor:
-#         cursor.execute("SELECT id, name, description, price, inventory FROM products")
-#         rows = cursor.fetchall()
-#     context = {
-#         'rows': rows,
-#     }
-#     return render(request, 'store/index.html', context)
-
-# def item(request, item_id):
-#     with connections['default'].cursor() as cursor:
-#         cursor.execute("SELECT id, name, description, price, inventory FROM products")
-#         rows = cursor.fetchall()
-#     for row in rows:
-#         if row[0] == item_id:
-#             return render(request, 'store/item.html', {'row' : row})
 
 
 def store(request):
@@ -27,14 +10,24 @@ def store(request):
         if thing.quantity > 0:
             context.append([thing.id, thing.name, thing.description,
                            thing.price, thing.quantity, thing.colors_types, thing.images])
-    return render(request, 'store/index.html', {"rows": context})
+    return render(request, 'store/index.html', {"rows": context, "logged_in": request.session.get('is_logged_in')})
 
 
 def item(request, item_id):
     thing = Product.objects.filter(id=item_id)
     wild_books = [thing[0].id, thing[0].name, thing[0].description,
                   thing[0].price, thing[0].quantity, thing[0].colors_types, thing[0].images]
-    return render(request, 'store/item.html', {'row':  wild_books})
+    return render(request, 'store/item.html', {'row':  wild_books, "logged_in": request.session.get('is_logged_in')})
+
+
+def add_item_here(number, username):
+    shopper = Shopper.objects.filter(username=username).first()
+    if shopper is not None:
+        shopper.items += str(number) + ','
+        shopper.save()
+        
+    
+    
 
 
 def add_to_cart(request, item_name):
@@ -43,11 +36,11 @@ def add_to_cart(request, item_name):
         item = all_data[0]
 
         if item.quantity <= 0:
-            return render(request, 'store/cart.html', {"logged_in" : "True", "no_stock": "TRUE", item: ""})
+            return render(request, 'store/cart.html', {"no_stock": "TRUE", item: "", "logged_in": request.session.get('is_logged_in')})
         else:
             item.quantity -= 1
             item.save()
-            # ADD THIS ITEM TO CURRENT USERS CART
-            return render(request, 'store/cart.html', {"logged_in" : "True", "no_stock": "FALSE", "item": item.name})
-    else: 
-        return render(request, 'log/login.html', {"logged_in" : "False"})
+            add_item_here(item.id, request.session.get('username'))
+            return render(request, 'store/cart.html', {"no_stock": "FALSE", "item": item.name, "logged_in": request.session.get('is_logged_in')})
+    else:
+        return render(request, 'log/login.html', {"logged_in": "False"})

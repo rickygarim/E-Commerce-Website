@@ -19,10 +19,40 @@
         <li class="active"> <a href="{% url 'cart' %}"> Cart </a> </li>
         <li> <a href="{% url 'info' %}"> Info </a> </li>
         <li>
-            <a href="{% url 'login' %}"> Login/</a> 
-            <a href="{% url 'logout' %}"> Logout </a> 
+            {% if logged_in == False %}
+                <a href="{% url 'login' %}"> Login</a> 
+            {% else %}
+                <a href="{% url 'logout' %}"> Logout </a> 
+            {% endif %}
         </li>
     </ul>
+
+    {% if cart|length == 0 %}
+    <h1> NO ITEMS CURRENTLY IN CART </h1>
+    {% else %}
+    <ul class="items" style="padding-top: 50px;">
+        {% for row in rows %}
+
+        <li>
+            <a href="{% url 'item' row.0 %}">
+                <h2 class="item-title">{{ row.1 }}</h2>
+                <p class="item-description">{{ row.2 }}</p>
+                <p class="item-price">{{ row.3 }}</p>
+                <p class="item-stock">Stock: {{ row.4 }}</p>
+
+                <p class="color-types">
+                    Colors: 
+                    {% for color in row.5 %}
+                    {{ color }}
+                    {% endfor %}
+                </p>
+            </a>
+        </li>
+
+        {% endfor %}
+    </ul>
+
+    {% endif %}
 
 </body>
 
