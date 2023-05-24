@@ -1,0 +1,21 @@
+ul.navigation {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+    padding-top: 35px;
+}
+
+ul.navigation a {
+    text-decoration: none;
+    font-size: larger;
+}
+
+ul.navigation a.active {
+    border: 2px solid pink;
+}
+
+.active {
+    border: 2px solid blue; 
+    padding: 3px;
+}

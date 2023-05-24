@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'container/template.css' %}">
-    <link rel="stylesheet" href="{% static 'store/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'log/styles.css' %}">
 </head>
 
 <body>
@@ -19,50 +19,50 @@
         <li> <a href="{% url 'info' %}"> Info </a> </li>
         <li class="active">
             {% if logged_in == False %}
-                <a href="{% url 'login' %}"> Login</a> 
+            <a href="{% url 'login' %}"> Login/</a>
+            
+            <a href="{% url 'newUser' %}"> Create User </a>
             {% else %}
-                <a href="{% url 'logout' %}"> Logout </a> 
+            <a href="{% url 'logout' %}"> Logout </a>
             {% endif %}
         </li>
 
-        <li>
-            <a href="{% url 'newUser' %}"> Create User </a>
-        </li>
+        
 
     </ul>
 
-    <form method="POST" action="{% url 'login' %}">
+    <div class="container">
+        <form method="POST" action="{% url 'login' %}">
         {% csrf_token %}
         <label for="username">Username:</label>
         <input type="text" id="username" name="username">
-
+        <br> <br> 
         <label for="password">Password:</label>
         <input type="password" id="password" name="password">
-
+        <br> <br> 
         <label for="remember">Remember me:</label>
         <input type="checkbox" id="remember" name="remember">
+        <br>
         <button type="submit">Login</button>
-
-        {% if state == "NoUser" %}
-            <p>Username does not exist</p>
-        {% elif state == "Success" %}
-            <p>Logged In !</p>
-            <script>
-                setTimeout(function () {
-                    window.location.href = "{% url 'home' %}";
-                }, 3000); 
-            </script>
-        {% elif state == "WrongPassword"%}
-            <p>Wrong password</p>
-        {% elif state == "Error" %}
-            <p>Error </p>
-        {% elif state == "AlreadyLoggedIn" %}
-            <p>Already Logged In, Sign out first! </p>
-        {% endif %}
-
-
-
     </form>
+    </div>
+
+    {% if state == "NoUser" %}
+        <p>Username does not exist</p>
+    {% elif state == "Success" %}
+        <p>Logged In !</p>
+        <script>
+            setTimeout(function () {
+                window.location.href = "{% url 'home' %}";
+            }, 3000); 
+        </script>
+    {% elif state == "WrongPassword"%}
+        <p>Wrong password</p>
+    {% elif state == "Error" %}
+        <p>Error </p>
+    {% elif state == "AlreadyLoggedIn" %}
+        <p>Already Logged In, Sign out first! </p>
+    {% endif %}
 
 </body>
 

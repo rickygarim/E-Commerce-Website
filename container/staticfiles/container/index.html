@@ -26,16 +26,13 @@
                 <a href="{% url 'logout' %}"> Logout </a> 
             {% endif %}
         </li>
-
-        {% if reload == "True" %}
-            <script>
-                window.location.reload();
-            </script>
-        {% endif %}
-
-        
-        
     </ul>
+
+    {% if logged_in == False %}
+        <h1> {{greeting}}! </h1>        
+    {% else %}
+        <h1> {{greeting}}, {{name}}!</h1>     
+    {% endif %}
 
 </body>
 
