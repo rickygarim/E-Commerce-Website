@@ -3,6 +3,9 @@ from django.db import connections
 from django.http import HttpResponse
 from datetime import datetime
 
+def capitalize(name):
+    return name[0].upper() + name[1:]
+
 
 def home(request): 
     
@@ -17,4 +20,4 @@ def home(request):
     else: 
         greeting = "Good Evening"
         
-    return render(request, 'container/index.html', {"logged_in": request.session.get('is_logged_in'), "greeting" : greeting, "name": request.session.get('name')})
+    return render(request, 'container/index.html', {"logged_in": request.session.get('is_logged_in'), "greeting" : greeting, "name": capitalize(request.session.get('name'))})

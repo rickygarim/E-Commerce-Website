@@ -1,23 +1,90 @@
-
 ul.navigation {
-    list-style: none;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #000;
     display: flex;
-    justify-content: space-around;
-    align-items: baseline;
-    padding-top: 35px;
+    justify-content: flex-start;
 }
 
-ul.navigation a {
+ul.navigation li {
+    margin: 20px;
+    position: relative;
+}
+
+ul.navigation li a {
     text-decoration: none;
-    font-size: larger;
+    color: #fff;
+    transition: color 0.3s ease-in-out;
+    position: relative;
+    font-size: 18px; 
 }
 
-ul.navigation a.active {
-    border: 2px solid pink;
+ul.navigation li a:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+    bottom: -6px;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease-in-out;
 }
 
-.active {
-    border: 2px solid red;
-    padding: 3px;
+ul.navigation li a:hover {
+    color: #ffca28;
 }
 
+ul.navigation li a:hover:before {
+    transform: scaleX(1);
+}
+
+ul.navigation li.active a {
+    color: #ffca28;
+}
+
+ul.navigation li.active a:before {
+    transform: scaleX(1);
+}
+
+Additional animations ul.navigation li {
+    opacity: 0;
+    animation: slideIn 0.5s forwards;
+    animation-delay: calc(var(--delay) * 0.1s);
+}
+
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+Styling and staying in place ul.navigation li:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+    bottom: -6px;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease-in-out;
+}
+
+ul.navigation li:hover:before,
+ul.navigation li.active:before {
+    transform: scaleX(1);
+}
+
+ul.navigation li:last-child {
+    margin-left: auto;
+}
