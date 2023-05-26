@@ -5,19 +5,19 @@ from datetime import datetime
 
 def capitalize(name):
     return name[0].upper() + name[1:]
+    
 
 
 def home(request): 
-    
     current_time = datetime.now().hour # 
-    
     greeting = ""
-    
     if current_time >= 6 and current_time < 12: 
         greeting = "Good Morning"
     elif current_time >= 12 and current_time < 18: 
         greeting = "Good Afternoon"
     else: 
         greeting = "Good Evening"
-        
-    return render(request, 'container/index.html', {"logged_in": request.session.get('is_logged_in'), "greeting" : greeting, "name": capitalize(request.session.get('name'))})
+    
+    if not request.session.get('is_logged_in'): 
+        return render(request, 'container/index.html', {"logged_in": "False", "greeting" : greeting})
+    return render(request, 'container/index.html', {"logged_in": str(request.session.get('is_logged_in')), "greeting" : greeting, "name": capitalize(request.session.get('name'))})
