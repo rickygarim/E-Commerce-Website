@@ -12,12 +12,15 @@ from django.contrib import auth
 def curr_user_to_items(curr_user):
     shopper = Shopper.objects.filter(username=curr_user).first()
     ans = []
-    print(str(shopper.items))
-    for i in range(len(str(shopper.items))):
-        if shopper.items[i] == ',':
-            ans.append(shopper.items[:i])
-            shopper.items = shopper.items[i+1:]
-    return ans
+    string = str(shopper.items)
+    l = string.split(",")
+    
+    if l[0] == '':
+        return []
+    if l[-1] == '':
+        l.pop()
+    return l
+    
 
 
 def print_cart(curr_user):
@@ -33,7 +36,7 @@ def print_cart(curr_user):
             ans.append(wild_books)
         else: 
             for i in range(len(ans)):
-                if ans[i][0] == wild_books[0]:
+                if int(ans[i][0]) == int(wild_books[0]):
                     ans[i][4] += 1
                     break
     return ans
@@ -41,6 +44,5 @@ def print_cart(curr_user):
 
 def cart(request):
     if not request.session.get('is_logged_in'):
-        return render(request, "log/logout.html", {"state": "NotLoggedIn", "from": "cart"})
-    auth
-    return render(request, 'cart/index.html', {"logged_in": request.session.get('is_logged_in'), "username":  request.session.get('username'), "cart": print_cart(request.session.get('username'))})
+        return render(request, "log/login.html", {"state" : "fromCart"})
+    return render(request, 'cart/index.html', {"rows": print_cart(request.session.get('username'))})

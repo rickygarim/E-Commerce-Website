@@ -61,6 +61,8 @@
         <p class="error-message">Error </p>
         {% elif state == "AlreadyLoggedIn" %}
         <p class="error-message">Already Logged In, Sign out first! </p>
+        {% elif state == "fromCart" %}
+        <p class="error-message">Please Log-In to view cart </p>
         {% endif %}
 
         <button type="submit">Login</button>
