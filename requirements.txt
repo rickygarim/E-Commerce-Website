@@ -1,21 +1,5 @@
 Django>= 3.2.19
 mysqlclient==2.1.1
-numpy==1.24.2
-packaging==23.0
-pandas==2.0.1
-Pillow==9.4.0
-protobuf==4.21.12
-pycodestyle==2.10.0
-pycparser==2.21
-pyparsing==3.0.9
-python-dateutil==2.8.2
-pytz==2023.3
 requests==2.29.0
-six==1.16.0
-soupsieve==2.4.1
 sqlparse==0.4.4
-ta==0.10.2
-tzdata==2023.3
-urllib3==1.26.15
-webencodings==0.5.1
-yfinance==0.2.18
+
