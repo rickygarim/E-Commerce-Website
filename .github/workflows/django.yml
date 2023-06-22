@@ -27,5 +27,4 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
-        cd container
-        python3 manage.py test
+        python3 container/manage.py test
