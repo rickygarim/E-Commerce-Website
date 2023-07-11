@@ -17,4 +17,4 @@ FEATURES TODO:
     3. Info section has to be done and styled 
     4. Maybe add a payment system? 
     5. FIGURE OUT HOW TO ADD IMAGES 
-    6. After adding to cart, redirect back to the same page, add a message saying succesfully or unsucesduly added to cart 
+    6.Random thing tester After adding to cart, redirect back to the same page, add a message saying succesfully or unsucesduly added to cart 
