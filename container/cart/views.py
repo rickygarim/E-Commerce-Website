@@ -9,6 +9,7 @@ from django.contrib import auth
 # Create your views here.
 
 
+
 def curr_user_to_items(curr_user):
     shopper = Shopper.objects.filter(username=curr_user).first()
     ans = []
@@ -41,8 +42,23 @@ def print_cart(curr_user):
                     break
     return ans
 
+from datetime import datetime
+
+def get_datetime_number():
+    now = datetime.now()
+    datetime_number = now.strftime('%Y%m%d%H%M%S')
+    return int(datetime_number)
 
 def cart(request):
+    if request.session.get("is_logged_in") and (get_datetime_number() - request.session.get('logged_in_time') >= 10000):
+        if not request.session.get('remember_me'):
+            request.session['is_logged_in'] = False 
+            return render(request, 'log/login.html', {"state": "Session Timed out", "logged_in": request.session.get('is_logged_in')})
+        elif get_datetime_number() - request.session.get('logged_in_time') >= 1000000: 
+            request.session['is_logged_in'] = False 
+            return render(request, 'log/login.html', {"state": "Session Timed out", "logged_in": request.session.get('is_logged_in')})
+            
     if not request.session.get('is_logged_in'):
-        return render(request, "log/login.html", {"state" : "fromCart"})
+        request.session['is_logged_in'] = False 
+        return render(request, "log/login.html", {"state" : "fromCart", "logged_in": request.session.get('is_logged_in')})
     return render(request, 'cart/index.html', {"rows": print_cart(request.session.get('username'))})

@@ -3,13 +3,20 @@ from django.contrib.auth import authenticate, login
 from . models import User
 from store.models import Shopper
 from django.shortcuts import redirect
+from datetime import datetime
 
+def get_datetime_number():
+    now = datetime.now()
+    datetime_number = now.strftime('%Y%m%d%H%M%S')
+    return int(datetime_number)
 
 def login(request):
+    print(get_datetime_number()) # 20230711060657
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-
+        remember= request.POST.get('remember')
+        
         if request.session.get('is_logged_in'):
             return render(request, 'log/login.html', {"state": "AlreadyLoggedIn", "logged_in": request.session.get('is_logged_in')})
 
@@ -21,6 +28,9 @@ def login(request):
             request.session['is_logged_in'] = True
             request.session['username'] = my_user[0].username
             request.session['name'] = my_user[0].first_name
+            request.session['logged_in_time'] = get_datetime_number()
+            request.session['remember_me'] = bool(remember)
+            
             return redirect('home')
         elif my_user[0].password != password:
             return render(request, 'log/login.html', {"state": "WrongPassword", "logged_in": request.session.get('is_logged_in')})
