@@ -12,16 +12,19 @@ def get_datetime_number():
 def capitalize(name):
     return name[0].upper() + name[1:]
     
-
+def logout(request): 
+    if bool(request.session.get("is_logged_in")) and (get_datetime_number() - int(request.session.get('logged_in_time')) >= 10000):
+        if not bool(request.session.get('remember_me')):
+            request.session['is_logged_in'] = False 
+            request.session['remember_me'] = False 
+            return render(request, 'log/login.html', {"state": "Session Timed out", "logged_in": request.session.get('is_logged_in')})
+        elif get_datetime_number() - int(request.session.get('logged_in_time')) >= 1000000: 
+            request.session['is_logged_in'] = False 
+            request.session['remember_me'] = False 
+            return render(request, 'log/login.html', {"state": "Session Timed out", "logged_in": request.session.get('is_logged_in')})
 
 def home(request): 
-    if request.session.get("is_logged_in") and (get_datetime_number() - request.session.get('logged_in_time') >= 10000):
-        if not request.session.get('remember_me'):
-            request.session['is_logged_in'] = False 
-            return render(request, 'log/login.html', {"state": "Session Timed out", "logged_in": request.session.get('is_logged_in')})
-        elif get_datetime_number() - request.session.get('logged_in_time') >= 1000000: 
-            request.session['is_logged_in'] = False 
-            return render(request, 'log/login.html', {"state": "Session Timed out", "logged_in": request.session.get('is_logged_in')})
+    logout(request)
     
     current_time = datetime.now().hour # 
     greeting = ""

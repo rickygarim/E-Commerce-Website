@@ -11,7 +11,7 @@ def get_datetime_number():
     return int(datetime_number)
 
 def login(request):
-    print(get_datetime_number()) # 20230711060657
+    
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']

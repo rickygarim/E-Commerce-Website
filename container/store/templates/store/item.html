@@ -29,7 +29,7 @@
         
     </ul>
 
-    <a href="{% url 'store' %}"> BACK </a>
+    
     <div class="parent-container">
         <div class="item-details-container">
             <h2 class="item-details-title">{{ row.1 }}</h2>
@@ -44,8 +44,11 @@
                 {% endfor %}
             </p>
             
-            {% if row.4 >  0%}
-                <a href="{% url 'add_to_cart' row.0 %}"> ADD TO CART </a>
+            {% if row.4 >  0 %}
+                <a href="{% url 'store' %}">GO BACK </a> <br>
+                {% if logged_in == True %}
+                    <a href="{% url 'add_to_cart' row.0 %}"> ADD TO CART </a>
+                {% endif %}
             {% endif %}
         </div>
     </div>

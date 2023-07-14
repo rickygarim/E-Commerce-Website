@@ -3,7 +3,7 @@ from django.db import connections
 from django.http import HttpResponse
 from store.models import Shopper, Product
 from django.contrib import auth
-
+from datetime import datetime
 
 
 # Create your views here.
@@ -42,21 +42,24 @@ def print_cart(curr_user):
                     break
     return ans
 
-from datetime import datetime
 
 def get_datetime_number():
     now = datetime.now()
     datetime_number = now.strftime('%Y%m%d%H%M%S')
     return int(datetime_number)
 
+def logout(request): 
+    if bool(request.session.get("is_logged_in")) and (get_datetime_number() - int(request.session.get('logged_in_time')) >= 10000):
+        if not bool(request.session.get('remember_me')):
+            request.session['is_logged_in'] = False 
+            request.session['remember_me'] = False 
+            return render(request, 'log/login.html', {"state": "Session Timed out", "logged_in": request.session.get('is_logged_in')})
+        elif get_datetime_number() - int(request.session.get('logged_in_time')) >= 1000000: 
+            request.session['is_logged_in'] = False 
+            request.session['remember_me'] = False 
+            return render(request, 'log/login.html', {"state": "Session Timed out", "logged_in": request.session.get('is_logged_in')})
 def cart(request):
-    if request.session.get("is_logged_in") and (get_datetime_number() - request.session.get('logged_in_time') >= 10000):
-        if not request.session.get('remember_me'):
-            request.session['is_logged_in'] = False 
-            return render(request, 'log/login.html', {"state": "Session Timed out", "logged_in": request.session.get('is_logged_in')})
-        elif get_datetime_number() - request.session.get('logged_in_time') >= 1000000: 
-            request.session['is_logged_in'] = False 
-            return render(request, 'log/login.html', {"state": "Session Timed out", "logged_in": request.session.get('is_logged_in')})
+    logout(request)
             
     if not request.session.get('is_logged_in'):
         request.session['is_logged_in'] = False 

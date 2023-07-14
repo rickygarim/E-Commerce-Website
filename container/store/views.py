@@ -9,15 +9,20 @@ def get_datetime_number():
     return int(datetime_number)
 
 
+def logout(request): 
+    if bool(request.session.get("is_logged_in")) and (get_datetime_number() - int(request.session.get('logged_in_time')) >= 10000):
+        if not bool(request.session.get('remember_me')):
+            request.session['is_logged_in'] = False 
+            request.session['remember_me'] = False 
+            return render(request, 'log/login.html', {"state": "Session Timed out", "logged_in": request.session.get('is_logged_in')})
+        elif get_datetime_number() - int(request.session.get('logged_in_time')) >= 1000000: 
+            request.session['is_logged_in'] = False 
+            request.session['remember_me'] = False 
+            return render(request, 'log/login.html', {"state": "Session Timed out", "logged_in": request.session.get('is_logged_in')})
+
 def store(request):
-    if request.session.get("is_logged_in") and (get_datetime_number() - request.session.get('logged_in_time') >= 10000):
-        if not request.session.get('remember_me'):
-            request.session['is_logged_in'] = False 
-            return render(request, 'log/login.html', {"state": "Session Timed out", "logged_in": request.session.get('is_logged_in')})
-        elif get_datetime_number() - request.session.get('logged_in_time') >= 1000000: 
-            request.session['is_logged_in'] = False 
-            return render(request, 'log/login.html', {"state": "Session Timed out", "logged_in": request.session.get('is_logged_in')})
-        
+    logout(request)
+     
     all_products = Product.objects.all()
     context = []
     for thing in all_products:
@@ -28,14 +33,8 @@ def store(request):
 
 
 def item(request, item_id):
-    if request.session.get("is_logged_in") and (get_datetime_number() - request.session.get('logged_in_time') >= 10000):
-        if not request.session.get('remember_me'):
-            request.session['is_logged_in'] = False 
-            return render(request, 'log/login.html', {"state": "Session Timed out", "logged_in": request.session.get('is_logged_in')})
-        elif get_datetime_number() - request.session.get('logged_in_time') >= 1000000: 
-            request.session['is_logged_in'] = False 
-            return render(request, 'log/login.html', {"state": "Session Timed out", "logged_in": request.session.get('is_logged_in')})
-        
+    print("in here ")
+    logout(request)
     thing = Product.objects.filter(id=item_id)
     wild_books = [thing[0].id, thing[0].name, thing[0].description,
                   thing[0].price, thing[0].quantity, thing[0].colors_types, thing[0].images]

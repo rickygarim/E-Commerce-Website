@@ -67,7 +67,7 @@ Additional animations ul.navigation li {
     }
 }
 
-Styling and staying in place ul.navigation li:before {
+ul.navigation li:before {
     content: "";
     position: absolute;
     width: 100%;
@@ -88,3 +88,4 @@ ul.navigation li.active:before {
 ul.navigation li:last-child {
     margin-left: auto;
 }
+
